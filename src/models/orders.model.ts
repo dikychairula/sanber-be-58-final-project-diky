@@ -1,12 +1,13 @@
 import mongoose from "mongoose";
+import UserModel from "./users.model";
 
 const Schema = mongoose.Schema;
 
 const OrderSchema = new Schema(
   {
     grandTotal: {
-        type: String,
-        unique: true,
+        type: Number,
+        required: true,
     },
     orderItems: [{
       name: {
@@ -18,7 +19,7 @@ const OrderSchema = new Schema(
           ref: "Products",
       },
       price: {
-          type: [String],
+          type: Number,
           required: true,
       },
       quantity: {
@@ -42,6 +43,7 @@ const OrderSchema = new Schema(
     timestamps: true,
   }
 );
+
 
 const OrdersModel = mongoose.model("Orders", OrderSchema);
 

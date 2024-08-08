@@ -3,7 +3,7 @@ import * as Yup from "yup";
 
 import jwt from "jsonwebtoken"
 
-import UserModel from "@/models/user.model";
+import UserModel from "@/models/users.model";
 import { decrypt } from "@/utils/encryption";
 import { SECRET } from "@/utils/env";
 import { IReqUser } from "@/utils/interfaces";
