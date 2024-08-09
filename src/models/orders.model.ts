@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import UserModel from "./users.model";
+import mail from "@/utils/mail"
 
 const Schema = mongoose.Schema;
 
@@ -45,6 +46,43 @@ const OrderSchema = new Schema(
 );
 
 
+OrderSchema.post("save", async function (doc, next) {
+  const order = doc;
+  const user = await UserModel.findById(order.createdBy);
+
+  if (!user) {
+    console.log("User does not exist");
+    return;
+  }
+
+  const content = await mail.render("order-success.ejs", {
+    customerName: user.fullName,
+    grandTotal: order.grandTotal,
+    orderItems: order.orderItems,
+    contactEmail: "tosayagroup@gmail.com",
+    companyName: "Tosaya (Toko Sagala Aya)",
+    year: 2024,
+  });
+
+  await mail.send({
+    to: user.email,
+    subject: "Tosaya Invoice",
+    content: content,
+  });
+
+  next();
+});
+
 const OrdersModel = mongoose.model("Orders", OrderSchema);
 
 export default OrdersModel;
+
+/* Variabel invoice */
+
+// customerName 
+// item.name
+// item.quantity
+// item.price
+// contactEmail
+// companyName
+// year

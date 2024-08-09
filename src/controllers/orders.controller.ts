@@ -65,7 +65,7 @@ export default {
           });
         }
 
-        const orderItem: IProduct['product'] = {
+        const orderProduct: IProduct['product'] = {
           name: product?.name,
           productId: product?._id.toString(),
           price: product?.price,
@@ -75,8 +75,8 @@ export default {
         product.qty -= item.quantity;
         await product.save({ session });
 
-        grandTotal += orderItem.price * orderItem.quantity;
-        itemArray.push(orderItem);
+        grandTotal += orderProduct.price * orderProduct.quantity;
+        itemArray.push(orderProduct);
         
       }
 
