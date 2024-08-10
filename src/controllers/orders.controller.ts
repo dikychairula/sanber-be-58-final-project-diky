@@ -160,30 +160,27 @@ export default {
   },
 
   async findOne(req: Request, res: Response) {
-    const createdBy = (req as IReqUser).user.id;
-
     try {
-      const order = await ProductsModel.findOne({
-        _id: req.params.id,
-        createdBy: createdBy,
-      });
+      const result = await OrdersModel.findById(req.params.id)
+        .populate('orderItems.productId')  
+        .populate('createdBy');
 
-      if (!order) {
+      if (!result) {
         return res.status(404).json({
-          message: "Order not found with that id user",
+          data: null,
+          message: "Order not found",
         });
       }
 
       res.status(200).json({
-        message: "Success get order by id",
-        data: order,
+        data: result,
+        message: "Success get one order",
       });
     } catch (error) {
       const err = error as Error;
-
       res.status(500).json({
-        message: "Failed get order by id user",
         data: err.message,
+        message: "Failed get one order",
       });
     }
   },
