@@ -161,26 +161,43 @@ export default {
 
   async findOne(req: Request, res: Response) {
     try {
-      const result = await OrdersModel.findById(req.params.id)
-        .populate('orderItems.productId')  
-        .populate('createdBy');
+      const userId = req.params.userId;
+      const {
+        limit = 10,
+        page = 1,
+        search = "",
+      } = req.query as unknown as IPaginationQuery;
 
-      if (!result) {
-        return res.status(404).json({
-          data: null,
-          message: "Order not found",
+      const query = { createdBy: userId };
+
+      if (search) {
+        Object.assign(query, {
+          $text: { $search: search },
         });
       }
 
+      const result = await OrdersModel.find(query)
+        .limit(limit)
+        .skip((page - 1) * limit)
+        .sort({ createdAt: -1 })
+        .populate('orderItems.productId')
+        .populate('createdBy');
+
+      const total = await OrdersModel.countDocuments(query);
+
       res.status(200).json({
         data: result,
-        message: "Success get one order",
+        message: "Success get orders by user",
+        page: +page,
+        limit: +limit,
+        total,
+        totalPages: Math.ceil(total / limit),
       });
     } catch (error) {
       const err = error as Error;
       res.status(500).json({
         data: err.message,
-        message: "Failed get one order",
+        message: "Failed get orders by user",
       });
     }
   },
