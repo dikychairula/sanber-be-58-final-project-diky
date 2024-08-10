@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import OrdersModel from "../models/orders.model";
-import ProductsModel from "../models/products.model";
-import { IReqUser } from "../utils/interfaces";
+import OrdersModel from "@/models/orders.model";
+import ProductsModel from "@/models/products.model";
+import { IReqUser } from "@/utils/interfaces";
 import * as Yup from "yup";
 
 const itemValidation = Yup.object().shape({

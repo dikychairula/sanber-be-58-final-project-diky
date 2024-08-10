@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import UserModel from "./users.model";
-import mail from "../utils/mail"
+import mail from "@/utils/mail"
 
 const Schema = mongoose.Schema;
 
