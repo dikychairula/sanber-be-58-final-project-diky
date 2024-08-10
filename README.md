@@ -343,7 +343,8 @@ Response:
     "message": "Success create order"
 }
 ```
-
+Pengiriman invoice melalui email setelah berhasil melakukan order produk
+![Screenshot_5](https://github.com/user-attachments/assets/195b3324-8103-45eb-b121-c498c4690d73)
 
 ### Histori order
 https://sanber-be-58-final-project-diky-production.up.railway.app/api/orders/
