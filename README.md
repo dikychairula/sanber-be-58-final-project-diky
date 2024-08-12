@@ -54,7 +54,7 @@ catatan : membutuhkan token autentikasi user pada header Authorization. didapat 
 | Method |     Endpoints     |   Deskripsi   |
 | -------| ----------------- | ------------- |
 |  POST  | /api/upload       | Upload single file   |
-|  POST  | /api/uploads      | Upload single file   |
+|  POST  | /api/uploads      | Upload multiple file   |
 
 
 
